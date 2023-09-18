@@ -1,0 +1,19 @@
+{
+  "name": "binary-search-trees",
+  "version": "1.0.0",
+  "description": "Binary Search Tree data structure",
+  "main": "index.js",
+  "scripts": {
+    "watch": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/climaxmba/binary-search-trees.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/climaxmba/binary-search-trees/issues"
+  },
+  "homepage": "https://github.com/climaxmba/binary-search-trees#readme"
+}
