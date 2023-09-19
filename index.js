@@ -39,6 +39,50 @@ class Tree {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   };
+
+  insert() {
+    return;
+  }
+
+  delete() {
+    return;
+  }
+
+  find() {
+    return;
+  }
+
+  levelOrder() {
+    return;
+  }
+  
+  inOrder() {
+    return;
+  }
+
+  preOrder() {
+    return;
+  }
+
+  postOrder() {
+    return;
+  }
+
+  height() {
+    return;
+  }
+
+  depth() {
+    return;
+  }
+
+  isBalanced() {
+    return;
+  }
+
+  rebalance() {
+    return;
+  }
 }
 
 // Test
