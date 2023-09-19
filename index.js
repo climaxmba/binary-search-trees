@@ -18,7 +18,7 @@ class Tree {
     // Sort and remove duplicates
     arr = arr.sort().filter((val, i, self) => self.indexOf(val) === i);
 
-    const mid = parseInt(arr.length/2);
+    const mid = parseInt(arr.length / 2);
     const root = new Node(arr[mid]);
 
     root.left = this.buildTree(arr.slice(0, mid));
@@ -28,5 +28,18 @@ class Tree {
   }
 }
 
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+  if (node === null) {
+    return;
+  }
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  }
+};
+
 // Test
-console.log(new Tree([4, 5, 6, 2, 7, 7, 2]))
+prettyPrint(new Tree([10, 9, 8, 7, 6, 4, 5, 3, 2, 1, 0]).root);
