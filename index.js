@@ -48,8 +48,8 @@ class Tree {
     this.root = this.#deleteAt(val, this.root);
   }
 
-  find() {
-    return;
+  find(val) {
+    return this.#findAt(val, this.root);
   }
 
   levelOrder() {
@@ -136,12 +136,15 @@ class Tree {
       return node;
     }
   }
+  #findAt(val, node) {
+    if (node === null) return node;
+    if (node.data === val) return node;
+
+    return this.#findAt(val, node.left) || this.#findAt(val, node.right);
+  }
 }
 
 // Test
 const tree = new Tree([10, 9, 8, 7, 6, 5, 4, 3]);
-tree.insert(2);
-tree.insert(12);
 tree.prettyPrint();
-tree.delete(4);
-tree.prettyPrint();
+console.log(tree.find(8));
