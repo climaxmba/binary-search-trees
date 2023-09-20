@@ -27,7 +27,7 @@ class Tree {
     return root;
   }
 
-  prettyPrint = (node = this.root, prefix = "", isLeft = true) => {
+  prettyPrint(node = this.root, prefix = "", isLeft = true) {
     if (node === null) {
       return;
     }
