@@ -40,11 +40,11 @@ class Tree {
     }
   };
 
-  insert() {
-    return;
+  insert(val) {
+    this.root = this.#insertAt(val, this.root);
   }
 
-  delete() {
+  delete(val) {
     return;
   }
 
@@ -83,7 +83,24 @@ class Tree {
   rebalance() {
     return;
   }
+
+  // Helper functions
+  #insertAt(val, node) {
+    if (node === null) {
+      node = new Node(val);
+    } else if (val < node.data) {
+      node.left = this.#insertAt(val, node.left);
+    } else if (val > node.data) {
+      node.right = this.#insertAt(val, node.right);
+    }
+
+    return node;
+  }
 }
 
 // Test
-new Tree([10, 9, 8, 7, 6, 4, 5, 3, 2, 1, 0]).prettyPrint();
+const tree = new Tree([10, 9, 8, 7, 6, 5, 4, 3]);
+tree.insert(2);
+tree.insert(12);
+tree.insert(11);
+tree.prettyPrint();
