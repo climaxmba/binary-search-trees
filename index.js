@@ -45,7 +45,7 @@ class Tree {
   }
 
   delete(val) {
-    return;
+    this.root = this.#deleteAt(val, this.root);
   }
 
   find() {
@@ -96,11 +96,52 @@ class Tree {
 
     return node;
   }
+  #deleteAt(val, node) {
+    if (node === null) return node;
+
+    if (node.data > val) {
+      node.left = this.#deleteAt(val, node.left);
+      return node;
+    } else if (node.data < val) {
+      node.right = this.#deleteAt(val, node.right);
+      return node;
+    }
+
+    // If one child is null
+    if (node.left === null) {
+      const tmpNode = node.right;
+      node = null;
+      return tmpNode;
+    } else if (node.right === null) {
+      const tmpNode = node.left;
+      node = null;
+      return tmpNode;
+    } else {
+      // If node has both children
+      let parentNode = node;
+      let parentRight = node.right;
+
+      while (parentRight.left !== null) {
+        parentNode = parentRight;
+        parentRight = parentRight.left;
+      }
+
+      if (parentNode !== node) {
+        parentNode.left = parentRight.right;
+      } else {
+        parentNode.right = parentRight.right;
+      }
+
+      node.data = parentRight.data;
+      return node;
+    }
+  }
 }
 
 // Test
 const tree = new Tree([10, 9, 8, 7, 6, 5, 4, 3]);
 tree.insert(2);
 tree.insert(12);
-tree.insert(11);
+tree.prettyPrint();
+tree.delete(4);
 tree.prettyPrint();
