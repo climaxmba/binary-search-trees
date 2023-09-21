@@ -32,13 +32,17 @@ class Tree {
       return;
     }
     if (node.right !== null) {
-      this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+      this.prettyPrint(
+        node.right,
+        `${prefix}${isLeft ? "│   " : "    "}`,
+        false
+      );
     }
     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
     if (node.left !== null) {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
-  };
+  }
 
   insert(val) {
     this.root = this.#insertAt(val, this.root);
@@ -52,10 +56,21 @@ class Tree {
     return this.#findAt(val, this.root);
   }
 
-  levelOrder() {
-    return;
+  levelOrder(func) {
+    // Recursive approach
+    // this.#levelOrderAt(func);
+
+    // Iterative approach
+    const queue = [this.root];
+
+    while (queue.length) {
+      const node = queue.shift();
+      func(node);
+      if (node.left !== null) queue.push(node.left);
+      if (node.right !== null) queue.push(node.right);
+    }
   }
-  
+
   inOrder() {
     return;
   }
@@ -142,9 +157,12 @@ class Tree {
 
     return this.#findAt(val, node.left) || this.#findAt(val, node.right);
   }
+  #levelOrderAt(func, node = this.root, queue = [this.root]) {
+    if (!queue.length) return;
+  }
 }
 
 // Test
-const tree = new Tree([10, 9, 8, 7, 6, 5, 4, 3]);
+const tree = new Tree([9, 8, 7, 6, 5, 4, 3]);
 tree.prettyPrint();
-console.log(tree.find(8));
+tree.levelOrder((node) => console.log(node.data));
