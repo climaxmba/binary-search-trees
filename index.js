@@ -57,6 +57,9 @@ class Tree {
   }
 
   levelOrder(func) {
+    // If no callback function is provided
+    if (func === undefined) return this.#noFuncLevelOrder();
+
     // Recursive approach
     this.#levelOrderAt(func);
 
@@ -168,9 +171,20 @@ class Tree {
 
     this.#levelOrderAt(func, queue);
   }
+  #noFuncLevelOrder(queue = [this.root], arr = []) {
+    if (!queue.length) return arr;
+    
+    const readyNode = queue.shift();
+    arr.push(readyNode.data);
+
+    if (readyNode.left !== null) queue.push(readyNode.left);
+    if (readyNode.right !== null) queue.push(readyNode.right);
+
+    return this.#noFuncLevelOrder(queue, arr);
+  }
 }
 
 // Test
 const tree = new Tree([9, 8, 7, 6, 5, 4, 3]);
 tree.prettyPrint();
-tree.levelOrder((node) => console.log(node.data));
+console.log(tree.levelOrder());
