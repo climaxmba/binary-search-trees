@@ -58,17 +58,17 @@ class Tree {
 
   levelOrder(func) {
     // Recursive approach
-    // this.#levelOrderAt(func);
+    this.#levelOrderAt(func);
 
     // Iterative approach
-    const queue = [this.root];
+    // const queue = [this.root];
 
-    while (queue.length) {
-      const node = queue.shift();
-      func(node);
-      if (node.left !== null) queue.push(node.left);
-      if (node.right !== null) queue.push(node.right);
-    }
+    // while (queue.length) {
+    //   const node = queue.shift();
+    //   func(node);
+    //   if (node.left !== null) queue.push(node.left);
+    //   if (node.right !== null) queue.push(node.right);
+    // }
   }
 
   inOrder() {
@@ -157,8 +157,16 @@ class Tree {
 
     return this.#findAt(val, node.left) || this.#findAt(val, node.right);
   }
-  #levelOrderAt(func, node = this.root, queue = [this.root]) {
+  #levelOrderAt(func, queue = [this.root]) {
     if (!queue.length) return;
+
+    const readyNode = queue.shift();
+    func(readyNode);
+
+    if (readyNode.left !== null) queue.push(readyNode.left);
+    if (readyNode.right !== null) queue.push(readyNode.right);
+
+    this.#levelOrderAt(func, queue);
   }
 }
 
