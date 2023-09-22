@@ -52,16 +52,26 @@ class Tree {
     this.root = this.#deleteAt(val, this.root);
   }
 
-  find(val) {
-    return this.#findAt(val, this.root);
+  find(val, node = this.root) {
+    if (node === null) return node;
+    if (node.data === val) return node;
+    return this.find(val, node.left) || this.find(val, node.right);
   }
 
-  levelOrder(func) {
+  levelOrder(func, queue = [this.root]) {
     // If no callback function is provided
     if (func === undefined) return this.#noFuncLevelOrder();
 
     // Recursive approach
-    this.#levelOrderAt(func);
+    if (!queue.length) return;
+
+    const readyNode = queue.shift();
+    func(readyNode);
+
+    if (readyNode.left !== null) queue.push(readyNode.left);
+    if (readyNode.right !== null) queue.push(readyNode.right);
+
+    this.levelOrder(func, queue);
 
     // Iterative approach
     // const queue = [this.root];
@@ -73,16 +83,39 @@ class Tree {
     // }
   }
 
-  inorder(func) {
-    return this.#inorderAt(func);
+  inorder(func, node = this.root) {
+    if (func !== undefined) {
+      if (node === null) return;
+
+      this.inorder(func, node.left);
+      func(node);
+      this.inorder(func, node.right);
+    } else {
+      let queue = [this.root], arr = [];
+      while (queue.length) {
+        const readyNode = queue.shift()
+        if (readyNode.left !== null) queue.push(readyNode.left);
+        arr.push(readyNode.data);
+        if (readyNode.right !== null) queue.push(readyNode.right);
+      }
+      return arr;
+    }
   }
 
-  preorder(func) {
-    return this.#preorderAt(func);
+  preorder(func, node = this.root) {
+    if (node === null) return;
+
+    func(node);
+    this.preorder(func, node.left);
+    this.preorder(func, node.right);
   }
 
-  postorder(func) {
-    return this.#postorderAt(func);
+  postorder(func, node = this.root) {
+    if (node === null) return;
+
+    this.postorder(func, node.left);
+    this.postorder(func, node.right);
+    func(node);
   }
 
   height() {
@@ -153,26 +186,9 @@ class Tree {
       return node;
     }
   }
-  #findAt(val, node) {
-    if (node === null) return node;
-    if (node.data === val) return node;
-
-    return this.#findAt(val, node.left) || this.#findAt(val, node.right);
-  }
-  #levelOrderAt(func, queue = [this.root]) {
-    if (!queue.length) return;
-
-    const readyNode = queue.shift();
-    func(readyNode);
-
-    if (readyNode.left !== null) queue.push(readyNode.left);
-    if (readyNode.right !== null) queue.push(readyNode.right);
-
-    this.#levelOrderAt(func, queue);
-  }
   #noFuncLevelOrder(queue = [this.root], arr = []) {
     if (!queue.length) return arr;
-    
+
     const readyNode = queue.shift();
     arr.push(readyNode.data);
 
@@ -181,30 +197,9 @@ class Tree {
 
     return this.#noFuncLevelOrder(queue, arr);
   }
-  #inorderAt(func, node = this.root) {
-    if (node === null) return;
-
-    this.#inorderAt(func, node.left);
-    func(node);
-    this.#inorderAt(func, node.right);
-  }
-  #preorderAt(func, node = this.root) {
-    if (node === null) return;
-
-    func(node);
-    this.#preorderAt(func, node.left);
-    this.#preorderAt(func, node.right);
-  }
-  #postorderAt(func, node = this.root) {
-    if (node === null) return;
-
-    this.#postorderAt(func, node.left);
-    this.#postorderAt(func, node.right);
-    func(node);
-  }
 }
 
 // Tests
 const tree = new Tree([9, 8, 7, 6, 5, 4, 3]);
 tree.prettyPrint();
-console.log(tree.postorder((node) => console.log(node.data)));
+console.log(tree.inorder(node => console.log(node.data)));
