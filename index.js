@@ -73,16 +73,16 @@ class Tree {
     // }
   }
 
-  inOrder(func) {
-    return this.#inOrderAt(func);
+  inorder(func) {
+    return this.#inorderAt(func);
   }
 
-  preOrder(func) {
-    return this.#preOrderAt(func);
+  preorder(func) {
+    return this.#preorderAt(func);
   }
 
-  postOrder(func) {
-    return this.#postOrderAt(func);
+  postorder(func) {
+    return this.#postorderAt(func);
   }
 
   height() {
@@ -181,25 +181,25 @@ class Tree {
 
     return this.#noFuncLevelOrder(queue, arr);
   }
-  #inOrderAt(func, node = this.root) {
+  #inorderAt(func, node = this.root) {
     if (node === null) return;
 
-    this.#inOrderAt(func, node.left);
+    this.#inorderAt(func, node.left);
     func(node);
-    this.#inOrderAt(func, node.right);
+    this.#inorderAt(func, node.right);
   }
-  #preOrderAt(func, node = this.root) {
+  #preorderAt(func, node = this.root) {
     if (node === null) return;
 
     func(node);
-    this.#preOrderAt(func, node.left);
-    this.#preOrderAt(func, node.right);
+    this.#preorderAt(func, node.left);
+    this.#preorderAt(func, node.right);
   }
-  #postOrderAt(func, node = this.root) {
+  #postorderAt(func, node = this.root) {
     if (node === null) return;
 
-    this.#postOrderAt(func, node.left);
-    this.#postOrderAt(func, node.right);
+    this.#postorderAt(func, node.left);
+    this.#postorderAt(func, node.right);
     func(node);
   }
 }
@@ -207,4 +207,4 @@ class Tree {
 // Tests
 const tree = new Tree([9, 8, 7, 6, 5, 4, 3]);
 tree.prettyPrint();
-console.log(tree.postOrder((node) => console.log(node.data)));
+console.log(tree.postorder((node) => console.log(node.data)));
