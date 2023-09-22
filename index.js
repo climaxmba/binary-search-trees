@@ -65,7 +65,6 @@ class Tree {
 
     // Iterative approach
     // const queue = [this.root];
-
     // while (queue.length) {
     //   const node = queue.shift();
     //   func(node);
@@ -74,16 +73,16 @@ class Tree {
     // }
   }
 
-  inOrder() {
-    return;
+  inOrder(func) {
+    return this.#inOrderAt(func);
   }
 
-  preOrder() {
-    return;
+  preOrder(func) {
+    return this.#preOrderAt(func);
   }
 
-  postOrder() {
-    return;
+  postOrder(func) {
+    return this.#postOrderAt(func);
   }
 
   height() {
@@ -182,9 +181,30 @@ class Tree {
 
     return this.#noFuncLevelOrder(queue, arr);
   }
+  #inOrderAt(func, node = this.root) {
+    if (node === null) return;
+
+    this.#inOrderAt(func, node.left);
+    func(node);
+    this.#inOrderAt(func, node.right);
+  }
+  #preOrderAt(func, node = this.root) {
+    if (node === null) return;
+
+    func(node);
+    this.#preOrderAt(func, node.left);
+    this.#preOrderAt(func, node.right);
+  }
+  #postOrderAt(func, node = this.root) {
+    if (node === null) return;
+
+    this.#postOrderAt(func, node.left);
+    this.#postOrderAt(func, node.right);
+    func(node);
+  }
 }
 
-// Test
+// Tests
 const tree = new Tree([9, 8, 7, 6, 5, 4, 3]);
 tree.prettyPrint();
-console.log(tree.levelOrder());
+console.log(tree.postOrder((node) => console.log(node.data)));
