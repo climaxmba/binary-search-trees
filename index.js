@@ -59,14 +59,14 @@ class Tree {
   }
 
   levelOrder(func, queue = [this.root]) {
-    // If no callback function is provided
-    if (func === undefined) return this.#noFuncLevelOrder();
-
     // Recursive approach
     if (!queue.length) return;
 
     const readyNode = queue.shift();
-    func(readyNode);
+    if (readyNode === this.root) this.#noFuncArray = [];
+    
+    // Run callback on node if callback is provided, else push node to an array
+    func ? func(readyNode) : this.#noFuncArray.push(readyNode.data);
 
     if (readyNode.left !== null) queue.push(readyNode.left);
     if (readyNode.right !== null) queue.push(readyNode.right);
@@ -77,45 +77,46 @@ class Tree {
     // const queue = [this.root];
     // while (queue.length) {
     //   const node = queue.shift();
-    //   func(node);
+    //   if (node === this.root) this.#noFuncArray = [];
+    //   func ? func(readyNode) : this.#noFuncArray.push(readyNode.data);
     //   if (node.left !== null) queue.push(node.left);
     //   if (node.right !== null) queue.push(node.right);
     // }
+
+    if (this.#noFuncArray.length) return this.#noFuncArray;
   }
 
   inorder(func, node = this.root) {
-    if (func !== undefined) {
-      if (node === null) return;
+    if (node === null) return;
+    if (node === this.root) this.#noFuncArray = [];
 
-      this.inorder(func, node.left);
-      func(node);
-      this.inorder(func, node.right);
-    } else {
-      let queue = [this.root], arr = [];
-      while (queue.length) {
-        const readyNode = queue.shift()
-        if (readyNode.left !== null) queue.push(readyNode.left);
-        arr.push(readyNode.data);
-        if (readyNode.right !== null) queue.push(readyNode.right);
-      }
-      return arr;
-    }
+    this.inorder(func, node.left);
+    func ? func(node) : this.#noFuncArray.push(node.data);
+    this.inorder(func, node.right);
+
+    if (this.#noFuncArray.length) return this.#noFuncArray;
   }
 
   preorder(func, node = this.root) {
     if (node === null) return;
+    if (node === this.root) this.#noFuncArray = [];
 
-    func(node);
+    func ? func(node) : this.#noFuncArray.push(node.data);
     this.preorder(func, node.left);
     this.preorder(func, node.right);
+
+    if (this.#noFuncArray.length) return this.#noFuncArray;
   }
 
   postorder(func, node = this.root) {
     if (node === null) return;
+    if (node === this.root) this.#noFuncArray = [];
 
     this.postorder(func, node.left);
     this.postorder(func, node.right);
-    func(node);
+    func ? func(node) : this.#noFuncArray.push(node.data);
+
+    if (this.#noFuncArray.length) return this.#noFuncArray;
   }
 
   height() {
@@ -134,7 +135,7 @@ class Tree {
     return;
   }
 
-  // Helper functions
+  // Helper functions & variables
   #insertAt(val, node) {
     if (node === null) {
       node = new Node(val);
@@ -186,20 +187,10 @@ class Tree {
       return node;
     }
   }
-  #noFuncLevelOrder(queue = [this.root], arr = []) {
-    if (!queue.length) return arr;
-
-    const readyNode = queue.shift();
-    arr.push(readyNode.data);
-
-    if (readyNode.left !== null) queue.push(readyNode.left);
-    if (readyNode.right !== null) queue.push(readyNode.right);
-
-    return this.#noFuncLevelOrder(queue, arr);
-  }
+  #noFuncArray = [];
 }
 
 // Tests
 const tree = new Tree([9, 8, 7, 6, 5, 4, 3]);
 tree.prettyPrint();
-console.log(tree.inorder(node => console.log(node.data)));
+console.log(tree.postorder(node => console.log(node.data)));
