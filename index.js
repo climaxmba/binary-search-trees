@@ -119,8 +119,15 @@ class Tree {
     if (this.#noFuncArray.length) return this.#noFuncArray;
   }
 
-  height() {
-    return;
+  height(node = this.root) {
+    if (node === null) return 0;
+
+    let leftHeight = 1, rightHeight = 1;
+
+    leftHeight += this.height(node.left);
+    rightHeight += this.height(node.right);
+
+    return (leftHeight < rightHeight) ? rightHeight : leftHeight;
   }
 
   depth() {
@@ -191,6 +198,6 @@ class Tree {
 }
 
 // Tests
-const tree = new Tree([9, 8, 7, 6, 5, 4, 3]);
+const tree = new Tree([15, 16, 17, 14, 13, 12, 11, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
 tree.prettyPrint();
-console.log(tree.postorder(node => console.log(node.data)));
+console.log(tree.height(tree.find(14)));
