@@ -130,8 +130,13 @@ class Tree {
     return (leftHeight < rightHeight) ? rightHeight : leftHeight;
   }
 
-  depth() {
-    return;
+  depth(node, currNode = this.root, currDepth = 0) {
+    // Depth counting from the root depth, 0
+    if (currNode === null) return;
+    if (node === currNode) return currDepth;
+
+    currDepth++;
+    return this.depth(node, currNode.left, currDepth) || this.depth(node, currNode.right, currDepth);
   }
 
   isBalanced() {
@@ -200,4 +205,4 @@ class Tree {
 // Tests
 const tree = new Tree([15, 16, 17, 14, 13, 12, 11, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
 tree.prettyPrint();
-console.log(tree.height(tree.find(14)));
+console.log(tree.depth(tree.find(14)));
