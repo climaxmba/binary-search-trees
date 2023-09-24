@@ -2,17 +2,16 @@
 
 **Project: Binary Search Trees** from The Odin Project's [curriculum](https://www.theodinproject.com/lessons/javascript-binary-search-trees) using JavaScript classes.
 
-__Note__: Modules are implemented in CommonJS syntax for compatability.
-
 ## 📱 View demo
 
-To see a demo, clone this repository and run the command below in your terminal, make sure you have __NodeJS__ and __NPM__ installed.
+To see a demo, clone this repository and run the commands below in your terminal, make sure you have __NodeJS__ and __NPM__ installed.
 
 ```bash
 npm install
 
 npm run exec
 ```
+__Note__: Modules are implemented in CommonJS syntax for compatability.
 
 ## 🖇 Data structure
 ```javascript
