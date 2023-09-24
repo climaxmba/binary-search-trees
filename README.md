@@ -4,7 +4,17 @@
 
 __Note__: Modules are implemented in CommonJS syntax for compatability.
 
-##
+## 📱 View demo
+
+To see a demo, clone this repository and run the command below in your terminal, make sure you have __NodeJS__ and __NPM__ installed.
+
+```bash
+npm install
+
+npm run exec
+```
+
+## 🖇 Data structure
 ```javascript
 // Data structure of a binary search tree:
 // │       ┌── [ NODE(leaf) ]
