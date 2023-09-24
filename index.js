@@ -64,7 +64,7 @@ class Tree {
 
     const readyNode = queue.shift();
     if (readyNode === this.root) this.#noFuncArray = [];
-    
+
     // Run callback on node if callback is provided, else push node to an array
     func ? func(readyNode) : this.#noFuncArray.push(readyNode.data);
 
@@ -122,12 +122,13 @@ class Tree {
   height(node = this.root) {
     if (node === null) return 0;
 
-    let leftHeight = 1, rightHeight = 1;
+    let leftHeight = 1,
+      rightHeight = 1;
 
     leftHeight += this.height(node.left);
     rightHeight += this.height(node.right);
 
-    return (leftHeight < rightHeight) ? rightHeight : leftHeight;
+    return leftHeight < rightHeight ? rightHeight : leftHeight;
   }
 
   depth(node, currNode = this.root, currDepth = 0) {
@@ -136,11 +137,26 @@ class Tree {
     if (node === currNode) return currDepth;
 
     currDepth++;
-    return this.depth(node, currNode.left, currDepth) || this.depth(node, currNode.right, currDepth);
+    return (
+      this.depth(node, currNode.left, currDepth) ||
+      this.depth(node, currNode.right, currDepth)
+    );
   }
 
-  isBalanced() {
-    return;
+  isBalanced(node = this.root) {
+    if (node === null) return true;
+
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+
+    if (
+      Math.abs(leftHeight - rightHeight) <= 1 &&
+      this.isBalanced(node.left) &&
+      this.isBalanced(node.right)
+    )
+      return true;
+
+    return false;
   }
 
   rebalance() {
@@ -203,8 +219,6 @@ class Tree {
 }
 
 // Tests
-const tree = new Tree([15, 16, 17, 14, 13, 12, 11, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
+const tree = new Tree([9, 8, 7, 6, 5, 4, 3, 2, 1]);
 tree.prettyPrint();
-tree.rebalance();
-tree.prettyPrint();
-console.log(tree.depth(tree.find(14)));
+console.log(tree.isBalanced());
