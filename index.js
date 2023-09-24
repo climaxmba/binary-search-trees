@@ -144,7 +144,7 @@ class Tree {
   }
 
   rebalance() {
-    return;
+    this.root = this.buildTree(this.inorder());
   }
 
   // Helper functions & variables
@@ -204,5 +204,7 @@ class Tree {
 
 // Tests
 const tree = new Tree([15, 16, 17, 14, 13, 12, 11, 9, 8, 7, 6, 5, 4, 3, 2, 1]);
+tree.prettyPrint();
+tree.rebalance();
 tree.prettyPrint();
 console.log(tree.depth(tree.find(14)));
