@@ -121,7 +121,8 @@ class Tree {
   height(node = this.root) {
     if (node === null) return 0;
 
-    let leftHeight = 1, rightHeight = 1;
+    let leftHeight = 1,
+      rightHeight = 1;
 
     leftHeight += this.height(node.left);
     rightHeight += this.height(node.right);
@@ -147,9 +148,11 @@ class Tree {
     const leftHeight = this.height(node.left);
     const rightHeight = this.height(node.right);
 
-    if (Math.abs(leftHeight - rightHeight) <= 1 &&
+    if (
+      Math.abs(leftHeight - rightHeight) <= 1 &&
       this.isBalanced(node.left) &&
-      this.isBalanced(node.right))
+      this.isBalanced(node.right)
+    )
       return true;
 
     return false;
