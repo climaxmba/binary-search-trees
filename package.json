@@ -4,6 +4,7 @@
   "description": "Binary Search Tree data structure",
   "main": "index.js",
   "scripts": {
+    "exec": "node index.js",
     "watch": "nodemon index.js"
   },
   "repository": {
