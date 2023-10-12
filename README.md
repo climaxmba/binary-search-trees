@@ -7,9 +7,7 @@
 To see a demo, clone this repository and run the commands below in your terminal, make sure you have __NodeJS__ and __NPM__ installed.
 
 ```bash
-npm install
-
-npm run exec
+npm install && npm run exec
 ```
 __Note__: Modules are implemented in CommonJS syntax for compatability.
 
